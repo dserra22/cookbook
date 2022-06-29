@@ -162,7 +162,7 @@ body {
 .book {
   position: relative;
   width: 40rem;
-  height: 60rem;
+  height: 53rem;
   background-color: transparent;
 }
 .page {
@@ -171,7 +171,7 @@ body {
   height: 100%;
   top: 0;
   left: 0;
-  perspective: 1500px;
+  perspective: 1750px;
 }
 .page-back,
 .page-front {
@@ -182,7 +182,7 @@ body {
   top: 0;
   left: 0;
   transform-origin: left;
-  transition: transform 0.5s;
+  transition: transform 0.8s;
 }
 .page-front {
   z-index: 1;
