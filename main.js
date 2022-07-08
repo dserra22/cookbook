@@ -21,10 +21,14 @@ let onPointerDownMouseX = 0,
   controls,
   introText,
   rotateText = false,
+  firstYPosition = 1,
+  secondYPosition = 0.5,
+  thirdYPosition = 0.1,
   camPositionX = 10,
   camPositionZ = 40,
+  camPositionY = firstYPosition,
   camRatio = camPositionX / camPositionZ,
-  rate = 0.003,
+  rate = 0.0001,
   updateFOV = false;
 const tempV = new THREE.Vector3();
 
@@ -42,7 +46,7 @@ function createFont(text, x, y, z) {
     const geometry = new TextGeometry(text, {
       font: font,
       size: 0.2,
-      height: 0.001,
+      height: 0.02,
     });
     const textMesh = new THREE.Mesh(
       geometry,
@@ -62,9 +66,16 @@ createScene();
 animate();
 
 function createScene() {
-  createFont("The High Protein College Mostly Vegan Cookbook", 5.3, 0.1, 35);
+  createFont(
+    "The High Protein College Mostly Vegan Cookbook",
+    5,
+    firstYPosition,
+    35
+  );
+  createFont("By Yours Truly", 5, secondYPosition, 29);
+  createFont("David Serrano", 3, thirdYPosition, 22);
 
-  addCube();
+  // addCube();
 }
 
 function init() {
@@ -76,7 +87,7 @@ function init() {
     0.5,
     1100
   );
-  camera.position.set(camPositionX, 0.2, camPositionZ);
+  camera.position.set(camPositionX, camPositionY, camPositionZ);
   // camera.position.setZ = 2;
 
   scene = new THREE.Scene();
@@ -86,14 +97,15 @@ function init() {
   geometry.scale(-1, 1, 1);
 
   const gridHelper = new THREE.GridHelper();
-  scene.add(gridHelper);
+  // scene.add(gridHelper);
 
-  const texture = new THREE.TextureLoader().load("kitchen.jpg");
-  const material = new THREE.MeshBasicMaterial({ map: texture });
+  // const texture = new THREE.TextureLoader().load("kitchen.jpg");
+  // const material = new THREE.MeshBasicMaterial({ map: texture });
 
-  const mesh = new THREE.Mesh(geometry, material);
+  // const mesh = new THREE.Mesh(geometry, material);
+  scene.background = new THREE.Color(0xeeeeee);
 
-  scene.add(mesh);
+  // scene.add(mesh);
 
   renderer = new THREE.WebGLRenderer();
   renderer.setPixelRatio(window.devicePixelRatio);
@@ -137,7 +149,7 @@ function init() {
 
   //
 
-  // window.addEventListener("resize", onWindowResize);
+  window.addEventListener("resize", onWindowResize);
 }
 
 function onWindowResize() {
@@ -199,8 +211,19 @@ function update() {
   phi = THREE.MathUtils.degToRad(90 - lat);
   theta = THREE.MathUtils.degToRad(lon);
 
-  camera.position.set(camPositionX, 0.2, camPositionZ);
+  camera.position.set(camPositionX, camPositionY, camPositionZ);
 
+  if (camPositionZ < 35 && camPositionY > secondYPosition) {
+    camPositionY -= 0.003;
+  }
+  if (camPositionZ < 29 && camPositionY > thirdYPosition) {
+    camPositionY -= 0.002;
+  } else {
+    // camPositionY = thirdYPosition;
+  }
+
+  if (camPositionZ < 35) {
+  }
   if (camPositionX > 0) {
     camPositionX = camPositionX - rate * 1.3;
   } else {
@@ -234,7 +257,7 @@ function update() {
     }
   }
 
-  rate += 0.00005;
+  rate += Math.pow(1.1, rate) * 0.00001;
 
   const x = 500 * Math.sin(phi) * Math.cos(theta);
   const y = 500 * Math.cos(phi);
