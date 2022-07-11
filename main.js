@@ -50,7 +50,7 @@ function createFont(text, x, y, z) {
     });
     const textMesh = new THREE.Mesh(
       geometry,
-      new THREE.MeshBasicMaterial({ color: 0x2b82d4 })
+      new THREE.MeshBasicMaterial({ color: 0x5c858f })
     );
     textMesh.position.x = x;
     textMesh.position.y = y;
@@ -103,7 +103,10 @@ function init() {
   // const material = new THREE.MeshBasicMaterial({ map: texture });
 
   // const mesh = new THREE.Mesh(geometry, material);
-  scene.background = new THREE.Color(0xeeeeee);
+  scene.background = new THREE.Color(0xffebd7);
+  scene.background = new THREE.Color(0xfff3e7);
+  scene.background = new THREE.Color(0xfff7ef);
+  scene.background = new THREE.Color(0xfffbf7);
 
   // scene.add(mesh);
 
@@ -258,6 +261,7 @@ function update() {
   }
 
   rate += Math.pow(1.1, rate) * 0.00001;
+  // rate += Math.pow(1.1, rate) * 0.1;
 
   const x = 500 * Math.sin(phi) * Math.cos(theta);
   const y = 500 * Math.cos(phi);
