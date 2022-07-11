@@ -131,7 +131,7 @@ const createImgBox = (recipeNum, curURL, box) => {
   }
   // check if url exists
 
-  let src = `recipeimg/r${recipeNum}${curURL}.jpg`;
+  let src = `r${recipeNum}${curURL}.jpg`;
   imageExists(src).then((ok) => {
     // console.log(ok);
     // does not exist
@@ -150,7 +150,7 @@ const createImgBox = (recipeNum, curURL, box) => {
 
 const addImagesToImgBox = (recipeNum, curURL, box) => {
   for (const img of box.children) {
-    img.style.backgroundImage = `url(recipeimg/r${recipeNum}${curURL}.jpg)`;
+    img.style.backgroundImage = `url(r${recipeNum}${curURL}.jpg)`;
     curURL += 1;
   }
 };
